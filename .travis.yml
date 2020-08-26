@@ -2,7 +2,7 @@ language: python
 python:
   - '3.6'
   - '3.7'
-dist: trusty
+dist: xenial
 env:
   - FLASK_ENV=testing
 install:
