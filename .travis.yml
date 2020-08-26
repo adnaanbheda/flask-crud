@@ -4,7 +4,7 @@ python:
   - '3.7'
 dist: trusty
 env:
-  - FLASK_ENV=development
+  - FLASK_ENV=testing
 install:
   - pip install pipenv
   - pipenv install
