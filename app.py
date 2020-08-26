@@ -7,26 +7,20 @@ import os
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Configuration
 if app.config["ENV"] == "production":
     app.config.from_object("config.ProductionConfig")
 else:
     app.config.from_object("config.DevelopmentConfig")
 
+# ORM setup
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 db.create_all()
+
+# Routes setup
 from routes import customers
-
-
-@app.route('/signup', methods=['POST'])
-def signup():
-    pass
-
-
-@app.route('/login', methods=['POST'])
-def login():
-    pass
-
+from routes import auth
 
 if __name__ == "__main__":
-    app.run(debug == True)
+    app.run(debug=True)
