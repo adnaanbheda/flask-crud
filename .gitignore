@@ -4,3 +4,4 @@ __pycache__
 instance/
 .webassets-cache
 *.sqlite
+.vscode
