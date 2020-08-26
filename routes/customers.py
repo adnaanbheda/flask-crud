@@ -4,7 +4,7 @@ from sqlalchemy import desc
 from flask import request, jsonify
 import datetime
 from services.jwt import auth_required
-date_format = '%d-%m-%Y'
+from utils.utils import success_response, error_response, parse_date
 
 
 @app.route('/customer', methods=["POST"])
@@ -12,7 +12,9 @@ date_format = '%d-%m-%Y'
 def add_customer():
     name = request.json['name']
     dob = request.json['dob']
-    dob_object = datetime.datetime.strptime(dob, date_format).date()
+    dob_object = parse_date(dob)
+    if not dob_object:
+        return jsonify(error_response("Invalid Date"))
     new_customer = Customer(name, dob_object)
     db.session.add(new_customer)
     db.session.commit()
@@ -39,12 +41,13 @@ def update_customer(id):
     customer = Customer.query.get(id)
     name = request.json['name']
     dob = request.json['dob']
-    dob_object = datetime.datetime.strptime(dob, date_format)
+    dob_object = parse_date(dob)
+    if not dob_object:
+        return jsonify(error_response("Invalid Date"))
     updated_at = datetime.datetime.now()
     customer.name = name
     customer.dob = dob_object
     customer.updated_at = updated_at
-
     db.session.commit()
     return customer_schema.jsonify(customer)
 
@@ -54,3 +57,15 @@ def update_customer(id):
 def list_customers(limit):
     customers = Customer.query.order_by(desc(Customer.dob)).limit(limit).all()
     return jsonify(customers_schema.dump(customers))
+
+
+@app.route('/customer/<id>', methods=['DELETE'])
+@auth_required
+def delete_customer(id):
+    try:
+        customer = Customer.query.get(id)
+        db.session.delete(customer)
+        db.session.commit()
+        return jsonify(success_response('Successfully Deleted.'))
+    except:
+        return jsonify(error_response('Something went wrong'))
