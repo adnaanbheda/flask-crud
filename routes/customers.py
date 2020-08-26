@@ -32,6 +32,8 @@ def get_all_customers():
 @auth_required
 def get_customer(id):
     customer = Customer.query.get(id)
+    if not customer:
+        return jsonify(error_response("Customer doesn't exist"))
     return customer_schema.jsonify(customer)
 
 
@@ -39,6 +41,8 @@ def get_customer(id):
 @auth_required
 def update_customer(id):
     customer = Customer.query.get(id)
+    if not customer:
+        return jsonify(error_response("Customer doesn't exist"))
     name = request.json['name']
     dob = request.json['dob']
     dob_object = parse_date(dob)
@@ -64,6 +68,8 @@ def list_customers(limit):
 def delete_customer(id):
     try:
         customer = Customer.query.get(id)
+        if not customer:
+            return jsonify(error_response("Customer doesn't exist"))
         db.session.delete(customer)
         db.session.commit()
         return jsonify(success_response('Successfully Deleted.'))
