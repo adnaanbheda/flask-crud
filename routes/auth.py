@@ -21,7 +21,6 @@ def login():
         password = request.json['password']
     if (username and password):
         user = User.query.filter_by(username=username).first()
-        print(user.password)
         if check_password_hash(str(user.password), password):
             token = jwt.encode({'id': user.id,
                                 'exp': datetime.datetime.now() + datetime.timedelta(hours=24)},
