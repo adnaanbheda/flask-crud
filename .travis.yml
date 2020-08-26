@@ -2,7 +2,9 @@ language: python
 python:
   - '3.6'
   - '3.7'
-os: linux
+dist: trusty
+env:
+  - FLASK_ENV=development
 install:
   - pip install pipenv
   - pipenv install
