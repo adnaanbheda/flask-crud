@@ -1,6 +1,4 @@
 import datetime
-date_format =
-year_format =
 formats = ['%d-%m-%Y', '%Y-%m-%d']
 
 
