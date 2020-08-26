@@ -3,11 +3,12 @@ from models.customer import Customer, customer_schema, customers_schema
 from sqlalchemy import desc
 from flask import request, jsonify
 import datetime
-
+from services.jwt import auth_required
 date_format = '%d-%m-%Y'
 
 
 @app.route('/customer', methods=["POST"])
+@auth_required
 def add_customer():
     name = request.json['name']
     dob = request.json['dob']
@@ -19,18 +20,21 @@ def add_customer():
 
 
 @app.route('/customer', methods=['GET'])
+@auth_required
 def get_all_customers():
     customers = Customer.query.all()
     return customers_schema.jsonify(customers)
 
 
 @app.route('/customer/<id>', methods=['GET'])
+@auth_required
 def get_customer(id):
     customer = Customer.query.get(id)
     return customer_schema.jsonify(customer)
 
 
 @app.route('/customer/<id>', methods=['PUT'])
+@auth_required
 def update_customer(id):
     customer = Customer.query.get(id)
     name = request.json['name']
@@ -46,6 +50,7 @@ def update_customer(id):
 
 
 @app.route('/customer/list/<limit>', methods=['GET'])
+@auth_required
 def list_customers(limit):
     customers = Customer.query.order_by(desc(Customer.dob)).limit(limit).all()
     return jsonify(customers_schema.dump(customers))

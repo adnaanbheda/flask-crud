@@ -4,12 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+autopep8 = "*"
 
 [packages]
 flask = "*"
 flask-sqlalchemy = "*"
 flask-cors = "*"
-flask-restful = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 
