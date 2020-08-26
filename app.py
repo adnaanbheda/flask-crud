@@ -19,8 +19,8 @@ ma = Marshmallow(app)
 db.create_all()
 
 # Routes setup
-from routes import customers
-from routes import auth
+import routes.customers
+import routes.auth
 
 if __name__ == "__main__":
     app.run(debug=True)
