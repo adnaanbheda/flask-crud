@@ -7,4 +7,4 @@ Basic Customers REST API created using Flask, SQLAlchemy, Marshmallow
 - [x] Customer Routes
 - [x] Login/Signup Setup
 - [x] JWT Auth
-- [ ] Create Docker Compose
+- [ ] Create Docker Compose File
