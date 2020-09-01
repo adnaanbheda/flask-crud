@@ -47,7 +47,7 @@ To run this application, you'll require `pipenv`
 
 ### Endpoints
 
-| Route | Method | Description | Authentication Required| Body | 
+| Route | Method | Description | Authentication Required | Body | 
 | --- | --- | --- | --- | --- | 
 | /login | `POST` | Login endpoint to receive the token | No | `username`, `password`|
 | /signup | `POST` | Signup endpoint to receive the token | No | `userame`, `password`|
